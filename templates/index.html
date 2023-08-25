@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Efficiency Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sleep Efficiency Prediction</h1>
+        <form method="POST" action="/predict">
+            <label for="Age">Age:</label>
+            <input type="number" name="Age" required><br>
+
+            <label for="Gender">Gender (0 - Female, 1 - Male):</label>
+            <input type="number" name="Gender" min="0" max="1" required><br>
+
+            <label for="sleep_duration">Sleep Duration:</label>
+            <input type="number" step="0.1" name="sleep_duration" required><br>
+
+            <label for="rem_percentage">REM Sleep Percentage:</label>
+            <input type="number" name="rem_percentage" required><br>
+
+            <label for="deep_percentage">Deep Sleep Percentage:</label>
+            <input type="number" name="deep_percentage" required><br>
+
+            <label for="light_percentage">Light Sleep Percentage:</label>
+            <input type="number" name="light_percentage" required><br>
+
+            <label for="awakenings">Awakenings:</label>
+            <input type="number" step="0.1" name="awakenings" required><br>
+
+            <label for="caffeine">Caffeine Consumption:</label>
+            <input type="number" step="0.01" name="caffeine" required><br>
+
+            <label for="alcohol">Alcohol Consumption:</label>
+            <input type="number" step="0.01" name="alcohol" required><br>
+
+            <label for="smoking">Smoking Status (0 - Non-Smoker, 1 - Smoker):</label>
+            <input type="number" min="0" max="1" name="smoking" required><br>
+
+            <label for="exercise">Exercise Frequency:</label>
+            <input type="number" step="0.1" name="exercise" required><br>
+
+            <button type="submit">Predict</button>
+        </form>
+        {% if prediction %}
+        <div class="prediction">
+            <p>{{ prediction }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
