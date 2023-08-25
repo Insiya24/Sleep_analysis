@@ -1,0 +1,10 @@
+pandas
+numpy
+seaborn
+mne
+setuptools
+wheel
+scikit-learn==1.2.2
+pickle5
+transformers
+torch
