@@ -1,11 +1,11 @@
 import pickle
 import numpy as np
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
 # Load the trained model from the pickle file
-with open('modellll.pkl', 'rb') as model_file:
+with open('C:/Users/insiy/Downloads/neend3.0/sleep_analysis/sleep_efficiency_model.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
 @app.route('/')
@@ -30,8 +30,21 @@ def predict():
                           awakenings, caffeine, alcohol, smoking, exercise]])
 
     sleep_efficiency_prediction = model.predict(features)[0]
-    
-    return render_template('index.html', prediction=f'Predicted Sleep Efficiency: {sleep_efficiency_prediction:.2f}')
+    sleep_efficiency_prediction=round(sleep_efficiency_prediction, 2)
+    if sleep_efficiency_prediction > 0.70:
+        return redirect(url_for('positive', prediction=sleep_efficiency_prediction))
+    else:
+        return redirect(url_for('negative', prediction=sleep_efficiency_prediction))
+
+@app.route('/positive')
+def positive():
+    prediction = float(request.args.get('prediction'))
+    return render_template('positive.html', prediction=prediction)
+
+@app.route('/negative')
+def negative():
+    prediction = float(request.args.get('prediction'))
+    return render_template('negative.html', prediction=prediction)
 
 if __name__ == '__main__':
     app.run(debug=True)
